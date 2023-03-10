@@ -27,6 +27,17 @@ const server = http.createServer((req,res) => {
 			res.write(data);
 			res.end();
 		});
+	} else if (req.url == "/create-file") {
+		res.writeHead(200, { "Content-Type": "text/html" });
+		const data = "<h1>This is test file updated</h1>";
+		for (let i = 0; i < 100000; i++) {
+			fs.appendFile("temp/test.html", data, (err) => {
+			if (err) throw err;
+			});
+		}
+
+		res.write('File is created');
+		res.end();
 	} else{
 		res.writeHead(404, { "Content-Type": "text/html"});
 		fs.readFile("page/error.html", "utf8", (err, data) => {
