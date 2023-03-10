@@ -22,12 +22,18 @@ const server = http.createServer((req,res) => {
 	} else if(req.url == '/about') {
 
 		res.writeHead(200, { "Content-Type": "text/html"});
-		res.write('<h1>This is the about page</h1>');
-		res.end();
+		fs.readFile("page/about.html", "utf8", (err, data) => {
+			if (err) throw err;
+			res.write(data);
+			res.end();
+		});
 	} else{
 		res.writeHead(404, { "Content-Type": "text/html"});
-		res.write('<h1>Page not found</h1>');
-		res.end();
+		fs.readFile("page/error.html", "utf8", (err, data) => {
+			if (err) throw err;
+			res.write(data);
+			res.end();
+		});
 	}
 
 });
